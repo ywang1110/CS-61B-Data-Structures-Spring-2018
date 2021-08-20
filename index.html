@@ -1,0 +1,644 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Berkely CS 61B Data Structures </title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="ea44934e-7c83-47d1-b78c-e1ae4eef7076" class="page sans"><header><img class="page-cover-image" src="https://images.unsplash.com/photo-1470016342826-876ea880d0be?ixlib=rb-1.2.1&amp;q=85&amp;fm=jpg&amp;crop=entropy&amp;cs=srgb" style="object-position:center 50%"/><div class="page-header-icon page-header-icon-with-cover"><span class="icon">🐥</span></div><h1 class="page-title">Berkely CS 61B Data Structures </h1></header><div class="page-body"><h2 id="1cfd743d-e527-4212-8484-3bccacbba7f0" class=""><mark class="highlight-gray">Spring 2018 - Assignments</mark></h2><h1 id="03df61dc-e934-4948-8924-6159ac8d70fe" class=""><mark class="highlight-gray">About Me</mark></h1><hr id="4d7d085e-ef52-458f-9542-9b1eccd43d9a"/><div id="3d84389b-6d9e-4294-84ae-62c3d995b608" class="column-list"><div id="081e6ef7-9e78-41ac-8c3c-175dfe29f818" style="width:18.75%" class="column"><figure id="b40515a7-9db3-4b9c-a8c1-76d90cbb2d31" class="image"><a href="Berkely%20CS%2061B%20Data%20Structures%20b40515a79db34b9ca8c176d90cbb2d31/Untitled.png"><img style="width:192px" src="Berkely%20CS%2061B%20Data%20Structures%20b40515a79db34b9ca8c176d90cbb2d31/Untitled.png"/></a></figure></div><div id="cc480ab2-ac3a-4f4b-9c23-589a9ce2dda4" style="width:81.25%" class="column"><p id="2f80a92b-bcd3-458d-910d-a5512d447979" class="">My name is Yanan Wang, a PhD student 👩🏻‍🎓 in <mark class="highlight-teal"><strong>Computational Materials Science</strong></mark> at North Carolina State University and a graduate student majoring in <strong><mark class="highlight-purple">Computer Science</mark></strong> at Georgia Tech. </p><p id="d65972ac-3d95-4303-9ad1-80eedc144a66" class="">Recently, I started learning this Data Structures course online and I found the resources for it is scattered everywhere 😫. So an idea just poped up. Why would I post my learning process online. And Volia~ 💫. Hope it helps. If you have any comments please feel free to reach out to me.  </p></div></div><h1 id="b75962b6-a957-46a4-bc5f-40142895da59" class=""><mark class="highlight-gray">Homework</mark></h1><hr id="38745aba-42b1-49da-acac-49734c0402d3"/><div id="1cb87d7b-6efe-4bbf-9c2c-a66101ee2320" class="column-list"><div id="d3391b81-4b4b-4a6f-a8d4-29002d74831c" style="width:33.333333333333336%" class="column"><h2 id="eb58cddf-3fbf-455d-92f9-d5a961ab6b1e" class=""><mark class="highlight-gray">HW 0:</mark><mark class="highlight-orange"> </mark></h2><p id="5e5aa687-e435-44ef-9510-11c5283c30e9" class=""><mark class="highlight-brown"><em>A Java Crash Course</em></mark></p><hr id="3883518e-5c7b-4628-8b5b-440fcb471a52"/><ul id="f14072ec-83cb-4d5c-b6d5-440406b55bcd" class="toggle"><li><details open=""><summary><a href="https://sp19.datastructur.es/materials/hw/hw0/hw0.html#arrays"><strong>Contents</strong></a></summary><ol type="1" id="25808daa-b8c3-482a-afc7-b0ab1e905988" class="numbered-list" start="1"><li>Conditionals </li></ol><ol type="1" id="9bdb36f4-1694-4350-b4c4-c1dcbbc5d500" class="numbered-list" start="2"><li>While</li></ol><ol type="1" id="ba46ea67-ec4d-4e67-b474-c3a3cf4bdfa6" class="numbered-list" start="3"><li>Doubles and Strings</li></ol><ol type="1" id="99480722-3f15-484a-bd79-7342c7762573" class="numbered-list" start="4"><li>Defining Functions (a.k.a. Methods)</li></ol><ol type="1" id="62c311da-83ae-42cc-ad07-5944821ce07a" class="numbered-list" start="5"><li>Arrays</li></ol><ol type="1" id="050640b7-8fa2-4362-9b4c-c7a55c0ef520" class="numbered-list" start="6"><li>For Loops</li></ol><ol type="1" id="37c11333-0d1f-45bd-ace0-f63f74819cab" class="numbered-list" start="7"><li>Break and Continue</li></ol><ol type="1" id="dbe7c243-68dd-4ce4-ad47-220b193e6256" class="numbered-list" start="8"><li>The Enhanced For Loop</li></ol></details></li></ul><figure id="b7e68d4f-de9b-41e6-bc33-4fc5f61b80ed" class="link-to-page"><a href="Berkely%20CS%2061B%20Data%20Structures%20b40515a79db34b9ca8c176d90cbb2d31/Answers%20to%20the%20Assigment%20b7e68d4fde9b41e6bc334fc5f61b80ed.html"><span class="icon">🐩</span>Answers to the Assigment</a></figure><p id="2641cf91-e783-4f50-b600-cfb73871db4b" class="">
+</p></div><div id="4ea4ea0d-f1f2-48e4-a8ab-1cc731b78a2b" style="width:33.333333333333336%" class="column"><h2 id="a58c91a8-ede9-4dd8-a1be-71bbe1067178" class=""><mark class="highlight-gray">HW 1: </mark></h2><p id="e91b12cc-397d-44f9-8ca5-d4174b899963" class="">
+</p><hr id="7dfd5b56-9fc2-42a1-922e-a95a6d84cd69"/><ul id="91c912f4-2b7f-4f9f-9d83-4850f2f9b68b" class="toggle"><li><details open=""><summary><a href="https://sp19.datastructur.es/materials/hw/hw0/hw0.html#arrays"><strong>Co</strong></a><strong>ntents</strong></summary><ol type="1" id="e3bd67fe-a4d2-4ba4-aa73-77babe7148b5" class="numbered-list" start="1"><li>Conditionals </li></ol><ol type="1" id="562cbae3-9c3b-4b62-a631-a336ca8f52e0" class="numbered-list" start="2"><li>While</li></ol><ol type="1" id="3a9bde31-1ba4-4ecb-9d94-82f0577e0ce3" class="numbered-list" start="3"><li>Doubles and Strings</li></ol><ol type="1" id="32dd6652-afb2-44c1-b4ad-28cf88717edd" class="numbered-list" start="4"><li>Defining Functions (a.k.a. Methods)</li></ol><ol type="1" id="01923b8a-d760-4f77-8d80-da78f51023d0" class="numbered-list" start="5"><li>Arrays</li></ol><ol type="1" id="b2cd6f66-b3f1-49f4-b545-b49317b527cd" class="numbered-list" start="6"><li>For Loops</li></ol><ol type="1" id="e7cfb126-2bcd-450b-99e8-355cb4a0f8b2" class="numbered-list" start="7"><li>Break and Continue</li></ol><ol type="1" id="76f10ab5-177b-4b71-98d1-0307cf29209f" class="numbered-list" start="8"><li>The Enhanced For Loop</li></ol></details></li></ul><figure id="4c090015-f551-4bf3-acd7-93480e41ea80" class="link-to-page"><a href="Berkely%20CS%2061B%20Data%20Structures%20b40515a79db34b9ca8c176d90cbb2d31/Copy%20of%20Answers%20to%20the%20Assigment%204c090015f5514bf3acd793480e41ea80.html"><span class="icon">🐭</span>Copy of Answers to the Assigment</a></figure><p id="28d0b0e4-af6f-452e-9199-02b7ce367555" class="">
+</p></div><div id="1ffdfed3-4ca5-42a7-843f-613d769eab34" style="width:33.33333333333333%" class="column"><h2 id="a8347d79-d820-4dff-952c-d5bb09071885" class=""><mark class="highlight-gray">HW 2: </mark></h2><p id="b72d2d7a-793c-486a-8a1a-cfff455f5a56" class="">
+</p><hr id="4b464b43-b5c9-4a95-a6c5-4d7ab595ac39"/><ul id="d74a1556-5058-46ff-b103-3407bb0ce8f3" class="toggle"><li><details open=""><summary><a href="https://sp19.datastructur.es/materials/hw/hw0/hw0.html#arrays"><strong>Co</strong></a><strong>ntents</strong></summary><ol type="1" id="f2351e7e-cd76-49d8-b0c8-6d0756f95674" class="numbered-list" start="1"><li>Conditionals </li></ol><ol type="1" id="37f0d38e-762a-44c9-a170-6cbab8c0e09f" class="numbered-list" start="2"><li>While</li></ol><ol type="1" id="bf606f1d-b269-4c40-80f7-9d7a7874b1d0" class="numbered-list" start="3"><li>Doubles and Strings</li></ol><ol type="1" id="522cee54-7cf9-485a-8bc3-17844af80757" class="numbered-list" start="4"><li>Defining Functions (a.k.a. Methods)</li></ol><ol type="1" id="17982963-7790-4288-aba1-e456233f1df6" class="numbered-list" start="5"><li>Arrays</li></ol><ol type="1" id="d42e90aa-22b1-46af-90fe-619ef90c1a1a" class="numbered-list" start="6"><li>For Loops</li></ol><ol type="1" id="d6cdce44-921c-41cb-bcd2-2f99568306a0" class="numbered-list" start="7"><li>Break and Continue</li></ol><ol type="1" id="be450289-71e5-4c28-b493-eb3c6bace687" class="numbered-list" start="8"><li>The Enhanced For Loop</li></ol></details></li></ul><figure id="325b462e-9b7f-4d54-b917-ebeb022266f0" class="link-to-page"><a href="Berkely%20CS%2061B%20Data%20Structures%20b40515a79db34b9ca8c176d90cbb2d31/Copy%20of%20Answers%20to%20the%20Assigment%20325b462e9b7f4d54b917ebeb022266f0.html"><span class="icon">🐰</span>Copy of Answers to the Assigment</a></figure><p id="fe40cd97-8e2b-4746-80b4-c2898bc1b60a" class="">
+</p></div></div><p id="a899e608-41ab-4ea5-a28c-0408bc8c17ad" class="">
+</p><p id="c9b40f4c-195a-44f7-ad5d-a6ac89125653" class="">
+</p><p id="5dbbbcf4-3271-4539-8a0a-e95277b1b6c2" class="">
+</p></div></article></body></html>
